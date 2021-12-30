@@ -40,7 +40,7 @@ const SideIcon = styled.div`
         cursor: pointer;
 
         &:hover {
-            color: #ff6b6b;
+            color: #fd79a8;
         }
     }
 `;
@@ -55,8 +55,8 @@ const ProfileIcon = styled.div`
         border-radius: 50%;
 
         &:hover {
-            --webkit-box-shadow: 0 5px 24px -3px #ff6b6b;
-            box-shadow: 0 5px 24px -3px #ff6b6b;
+            --webkit-box-shadow: 0 5px 24px -3px #fd79a8;
+            box-shadow: 0 5px 24px -3px #fd79a8;
         }
     }
 
