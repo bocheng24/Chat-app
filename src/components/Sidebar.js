@@ -7,7 +7,7 @@ import profileImg from '../assets/profile1.jpg'
 const Wrapper = styled.div`
     height: calc(100vh - 100px);
     padding: 50px 0;
-    width: 100px;
+    width: 120px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

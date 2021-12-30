@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   max-height: 100vh;
   min-width: 100vw;
   max-width: 100vw;
+  display: flex;
 `;
 
 const Main = styled.div`
