@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import logo from '../assets/chat-logo.png'
@@ -66,6 +66,9 @@ const ProfileIcon = styled.div`
 `;
 
 function Sidebar() {
+
+    const [activeIcon, setActiveIcon] = useState('inbox');
+
     return (
         <Wrapper>
 
@@ -74,17 +77,17 @@ function Sidebar() {
             </LogoContainer>
 
             <SideIcons>
-                <SideIcon>
-                    <i className="fas fa-inbox"></i>
+                <SideIcon onClick={() => setActiveIcon('inbox')}>
+                    <i className="fas fa-inbox" style={ {color: activeIcon === 'inbox' && '#fd79a8'} }></i>
                 </SideIcon>
-                <SideIcon>
-                    <i className="fas fa-cog"></i>
+                <SideIcon onClick={() => setActiveIcon('cog')}>
+                    <i className="fas fa-cog" style={ {color: activeIcon === 'cog' && '#fd79a8'} }></i>
                 </SideIcon>
-                <SideIcon>
-                    <i className="fas fa-user-circle"></i>
+                <SideIcon onClick={() => setActiveIcon('user')}>
+                    <i className="fas fa-user-circle" style={ {color: activeIcon === 'user' && '#fd79a8'} }></i>
                 </SideIcon>
-                <SideIcon>
-                    <i className="fas fa-bolt"></i>
+                <SideIcon onClick={() => setActiveIcon('bolt')}>
+                    <i className="fas fa-bolt" style={ {color: activeIcon === 'bolt' && '#fd79a8'} }></i>
                 </SideIcon>
             </SideIcons>
             <ProfileIcon>
