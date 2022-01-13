@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { getAuth, signOut } from 'firebase/auth'
 
 import logo from '../assets/chat-logo.png'
-import profileImg from '../assets/profile1.jpg'
+// import profileImg from '../assets/profile1.jpg'
+
 
 const Wrapper = styled.div`
     height: calc(100vh - 100px);
@@ -65,15 +67,16 @@ const ProfileIcon = styled.div`
     }
 `;
 
-function Sidebar() {
-
+function Sidebar({ user }) {
+    const auth = getAuth();
     const [activeIcon, setActiveIcon] = useState('inbox');
+    const { name, avatar } = user;
 
     return (
         <Wrapper>
 
             <LogoContainer>
-                <img src={ logo } alt="" />
+                <img src={ logo } alt="chat-logo" />
             </LogoContainer>
 
             <SideIcons>
@@ -90,8 +93,8 @@ function Sidebar() {
                     <i className="fas fa-bolt" style={ {color: activeIcon === 'bolt' && '#fd79a8'} }></i>
                 </SideIcon>
             </SideIcons>
-            <ProfileIcon>
-                <img src={ profileImg } alt="" />
+            <ProfileIcon onClick={() => signOut(auth)}>
+                <img src={ avatar } alt={ name } />
             </ProfileIcon>
         </Wrapper>
     )

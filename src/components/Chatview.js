@@ -32,6 +32,7 @@ const Avatar = styled.div`
 
     img {
         height: 70%;
+        border-radius: 50%;
     }
 `;
 
@@ -133,13 +134,15 @@ const MessageInput = styled.input`
     }
 `;
 
-function Chatview() {
+function Chatview({ user }) {
+    const { name, avatar } = user;
+
     return (
 
         <Wrapper>
             <ChatDetails>
                 <Avatar>
-                    <img src={ logo } alt="" />
+                    <img src={ avatar } alt={ name } />
                 </Avatar>
                 <ChatInfo>
                     <Name value={ "Andy" } />

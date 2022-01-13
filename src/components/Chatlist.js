@@ -64,6 +64,8 @@ const ConversationCard = styled.div`
 const Avatar = styled.div`
     height: 70px;
     margin-right: 25px;
+    border-radius: 50%;
+    overflow: hidden;
 
     img {
         height: 100%;    
@@ -83,7 +85,9 @@ const LastMsg = styled.div`
     padding: 3px 0;
 `;
 
-function Chatlist() {
+function Chatlist({ user }) {
+    const { name, avatar } = user;
+
     return (
         <Wrapper>
             <Title>Chats</Title>
@@ -93,7 +97,7 @@ function Chatlist() {
                     conData.map((data, idx) => (
                         <ConversationCard>
                             <Avatar>
-                                <img src={ data.avatar } alt="" />
+                                <img src={ avatar } alt={ name } />
                             </Avatar>
                             <ConversationInfo>
                                 <h3>{ data.name }</h3>
