@@ -72,7 +72,7 @@ const LastMsg = styled.div`
     padding: 3px 0;
 `;
 
-function Chatlist({ user, conversationData, conversationStat, setConversationStat }) {
+function Chatlist({ user, conversationData, curConversation, setCurConversation }) {
     // const { name, avatar } = user;
 
     return (
@@ -83,10 +83,10 @@ function Chatlist({ user, conversationData, conversationStat, setConversationSta
 
                 {
                     conversationData.map(data => (
-                        <ConversationCard onClick={() => {setConversationStat(data.id); console.log(conversationStat)}} 
+                        <ConversationCard onClick={ () => setCurConversation(data) }
                                           key={ data.id }
                                           style={
-                                            {backgroundColor: data.id === conversationStat && '#596275'} 
+                                            {backgroundColor: curConversation !== null && data.id === curConversation.id && '#596275'} 
                                           }
                         >
                             <Avatar>

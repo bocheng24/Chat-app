@@ -27,7 +27,7 @@ const Main = styled.div`
 function Home({ user }) {
 
   const [conversationData, setConversationData] = useState([]);
-  const [conversationStat, setConversationStat] = useState(null);
+  const [curConversation, setCurConversation] = useState(null);
 
   useEffect(() => {
     
@@ -59,8 +59,8 @@ function Home({ user }) {
       <Sidebar user={ user } />
       <Chatlist user={ user } 
                 conversationData={ conversationData } 
-                conversationStat={ conversationStat }
-                setConversationStat={ setConversationStat } 
+                curConversation={ curConversation }
+                setCurConversation={ setCurConversation } 
       />
       <Main>
         <Chatview user={ user } conversationData={ conversationData } />
