@@ -63,7 +63,11 @@ function Home({ user }) {
                 setCurConversation={ setCurConversation } 
       />
       <Main>
-        <Chatview user={ user } conversationData={ conversationData } />
+        <Chatview user={ user } 
+                  conversationData={ conversationData } 
+                  curConversation={ curConversation }
+                  setCurConversation={ setCurConversation }
+        />
       </Main>
     </Wrapper>
   );

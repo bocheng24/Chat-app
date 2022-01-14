@@ -1,5 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { db } from '../firebase'
+import { 
+    collection,
+    onSnapshot,
+    addDoc,
+    serverTimestamp,
+    orderBy,
+    query,
+    updateDoc,
+    doc
+} from 'firebase/firestore';
 
 // import logo from '../assets/chat-logo.png'
 
@@ -134,18 +145,41 @@ const MessageInput = styled.input`
     }
 `;
 
-function Chatview({ user, conversationData }) {
+function Chatview({ user, conversationData, curConversation, setCurConversation }) {
     const { name, avatar } = user;
+    const [newTitle, setNewTitle] = useState('Select a chat');
+
+    useEffect(() => {
+        curConversation && setNewTitle(curConversation.name)
+    }, [curConversation])
+
+    const updateChatTitle = async e => {
+        e.preventDefault(); 
+
+        const chatRef = doc(db, 'messages', curConversation.id);
+
+        if (newTitle.trim().length > 0 && newTitle.trim() !== curConversation.name) {
+            await updateDoc(chatRef, { name: newTitle.trim() })
+        }
+    }
 
     return (
 
         <Wrapper>
             <ChatDetails>
                 <Avatar>
-                    <img src={ avatar } alt={ name } />
+                  {
+                    curConversation ? <img src={ curConversation.avatar } alt={ curConversation.name } />
+                                    : <img src='https://avatars.dicebear.com/api/initials/select.svg' alt="select" />
+                  }
                 </Avatar>
                 <ChatInfo>
-                    <Name value={ "Andy" } />
+                    <form onSubmit={ updateChatTitle }>
+                        <Name value={ newTitle } 
+                              onChange={ e => setNewTitle(e.target.value) }
+                              disabled={ !curConversation }
+                        />
+                    </form>
                     <OnlineIndicator><span>•</span> Online</OnlineIndicator>
                 </ChatInfo>
                 <Icons>

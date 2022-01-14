@@ -29,6 +29,8 @@ const Subtitle = styled.div`
 `;
 
 const Conversations = styled.div`
+    // height: 100%;
+    // overflow: scroll;
 `;
 
 const ConversationCard = styled.div`
