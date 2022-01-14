@@ -1,21 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 
-import logo from '../assets/chat-logo.png'
-
-const conData = [
-    {
-        name: "Andy",
-        avatar: logo,
-        lastMsg: "Hi Andy"
-    },
-
-    {
-        name: "Paul",
-        avatar: logo,
-        lastMsg: "Have you had lunch?"
-    }
-];
+// import logo from '../assets/chat-logo.png'
 
 const Wrapper = styled.div`
     height: calc(100vh - 100px);
@@ -49,13 +35,14 @@ const ConversationCard = styled.div`
     display: flex;
     align-items: center;
     margin-left: -10px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     padding: 15px;
     cursor: pointer;
     border-radius: 12px;
+    background-color: #303952;
 
     &:hover {
-        background-color: #fd79a8;
+        background-color: #596275;
     }
 
 
@@ -85,27 +72,34 @@ const LastMsg = styled.div`
     padding: 3px 0;
 `;
 
-function Chatlist({ user }) {
-    const { name, avatar } = user;
+function Chatlist({ user, conversationData, conversationStat, setConversationStat }) {
+    // const { name, avatar } = user;
 
     return (
         <Wrapper>
             <Title>Chats</Title>
             <Subtitle>Last Messages</Subtitle>
             <Conversations>
+
                 {
-                    conData.map((data, idx) => (
-                        <ConversationCard>
+                    conversationData.map(data => (
+                        <ConversationCard onClick={() => {setConversationStat(data.id); console.log(conversationStat)}} 
+                                          key={ data.id }
+                                          style={
+                                            {backgroundColor: data.id === conversationStat && '#596275'} 
+                                          }
+                        >
                             <Avatar>
-                                <img src={ avatar } alt={ name } />
+                                <img src={ data.avatar } alt={ data.name } />
                             </Avatar>
                             <ConversationInfo>
                                 <h3>{ data.name }</h3>
-                                <LastMsg>{ data.lastMsg }</LastMsg>
+                                <LastMsg>{ data.lastMessage }</LastMsg>
                             </ConversationInfo>
                         </ConversationCard>
                     ))
                 }
+
             </Conversations>
         </Wrapper>
     )

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import logo from '../assets/chat-logo.png'
+// import logo from '../assets/chat-logo.png'
 
 const Wrapper = styled.div`
     height: 100vh;
@@ -134,7 +134,7 @@ const MessageInput = styled.input`
     }
 `;
 
-function Chatview({ user }) {
+function Chatview({ user, conversationData }) {
     const { name, avatar } = user;
 
     return (

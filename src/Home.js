@@ -1,10 +1,13 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import './App.css';
+import { db } from './firebase';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 
 import Sidebar from './components/Sidebar';
 import Chatlist from './components/Chatlist';
 import Chatview from './components/Chatview';
 
+import './App.css';
 
 const Wrapper = styled.div`
   background-color: #282a37;
@@ -22,12 +25,45 @@ const Main = styled.div`
 `;
 
 function Home({ user }) {
+
+  const [conversationData, setConversationData] = useState([]);
+  const [conversationStat, setConversationStat] = useState(null);
+
+  useEffect(() => {
+    
+    const q = query(collection(db, 'messages'), orderBy('lastUpdatedTime', 'desc'));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      
+      let conversations = [];
+      
+      snapshot.docs.map(doc => {
+
+        const conversation = {
+          id: doc.id,
+          ...doc.data()
+        };
+
+        conversations = [...conversations, conversation];
+
+        setConversationData(conversations);        
+
+      })
+    })
+    return () => unsubscribe();
+    
+  }, [])
+
   return (
     <Wrapper>
       <Sidebar user={ user } />
-      <Chatlist user={ user } />
+      <Chatlist user={ user } 
+                conversationData={ conversationData } 
+                conversationStat={ conversationStat }
+                setConversationStat={ setConversationStat } 
+      />
       <Main>
-        <Chatview user={ user } />
+        <Chatview user={ user } conversationData={ conversationData } />
       </Main>
     </Wrapper>
   );
