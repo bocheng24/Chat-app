@@ -104,7 +104,7 @@ function App() {
       snapshot.docs.map(doc => setUser(doc.data()))
     })
 
-    
+    return () => unsubscribe()
   }
 
   return (

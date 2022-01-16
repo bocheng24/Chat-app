@@ -73,7 +73,8 @@ const ProfileIcon = styled.div`
 function Sidebar({ user }) {
     const auth = getAuth();
     const [activeIcon, setActiveIcon] = useState('inbox');
-    const { name, avatar } = user;
+    const { username, avatar } = user;
+    console.log('side bar: ', user)
 
     return (
         <Wrapper>
@@ -97,7 +98,7 @@ function Sidebar({ user }) {
                 </SideIcon>
             </SideIcons>
             <ProfileIcon onClick={() => signOut(auth)}>
-                <img src={ avatar } alt={ name } />
+                <img src={ avatar } alt={ username } />
             </ProfileIcon>
         </Wrapper>
     )
