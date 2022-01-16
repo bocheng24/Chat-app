@@ -3,6 +3,15 @@ import styled from 'styled-components'
 import auth from 'firebase/auth'
 import { getAuth, signInWithPopup } from 'firebase/auth'
 import { provider } from './firebase'
+import { doc, 
+        collection, 
+        query, 
+        setDoc, 
+        getDocs, 
+        where, 
+        onSnapshot 
+    } from 'firebase/firestore'
+import { db } from './firebase'
 
 import Home from './Home'
 
@@ -59,10 +68,11 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if(user) {
+        // console.log('user: ', user.uid)
         setUser({
           name: user.displayName,
           email: user.email,
-          avatar: user.photoURL
+          avatar: `https://avatars.dicebear.com/api/open-peeps/${user.photoURL}.svg`
         })
       } else {
         setUser(null);
@@ -74,13 +84,27 @@ function App() {
 
 
   const handleUserSignIn = async () => {
-    const signin = await signInWithPopup(auth, provider);
 
-    setUser({
-      name: signin.user.displayName,
+    const signin = await signInWithPopup(auth, provider);
+    
+    const curUser = {
+      id: signin.user.uid,
+      username: signin.user.displayName,
       email: signin.user.email,
-      avatar: signin.user.photoURL
+      avatar: `https://avatars.dicebear.com/api/open-peeps/${signin.user.uid}.svg` 
+    }
+    
+    const userRef = doc(db, 'users', signin.user.uid)
+    await setDoc(userRef, curUser)
+
+    const q_users = collection(db, 'users');
+    const currentUser = query(q_users, where('id', '==', signin.user.uid));
+
+    const unsubscribe = onSnapshot(currentUser, (snapshot) => {
+      snapshot.docs.map(doc => setUser(doc.data()))
     })
+
+    
   }
 
   return (

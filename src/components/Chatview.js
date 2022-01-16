@@ -7,6 +7,7 @@ import {
     addDoc,
     serverTimestamp,
     orderBy,
+    where,
     query,
     updateDoc,
     doc
@@ -37,7 +38,7 @@ const Avatar = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1.7px solid #fd79a8;
+    border: 2px solid #b8e994;
     margin-right: 25px;
 
 
@@ -137,20 +138,43 @@ const MessageInput = styled.input`
     outline: none;
     background-color: #424657;
     border-radius: 6px;
+    border: 2px solid rgba(0, 0, 0, 0);
 
-    transition: none;
+    transition: all 0.2s;
 
     &:focus {
-        border: 3px solid #fd79a8;
+        border: 2px solid #fd79a8;
     }
 `;
 
 function Chatview({ user, conversationData, curConversation, setCurConversation }) {
     const { name, avatar } = user;
     const [newTitle, setNewTitle] = useState('Select a chat');
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
+
+    // console.log('curConversation: ', curConversation.id);
+
 
     useEffect(() => {
         curConversation && setNewTitle(curConversation.name)
+    }, [curConversation])
+
+    useEffect(() => {
+        if (curConversation) {
+            const q = query(
+                              collection(db, 
+                                       'messageHistory'
+                                       )
+                               
+                            )
+            
+            const messageHist = query(q, where('id', '==', '1'))
+            const unsubscribe = onSnapshot(messageHist, (snapshot) => {
+                console.log('Message Hist: ', snapshot.docs.length)
+                snapshot.docs.map(doc => console.log('doc: ', doc.id, doc.data()));
+            })
+        }
     }, [curConversation])
 
     const updateChatTitle = async e => {
@@ -164,7 +188,6 @@ function Chatview({ user, conversationData, curConversation, setCurConversation 
     }
 
     return (
-
         <Wrapper>
             <ChatDetails>
                 <Avatar>
@@ -198,7 +221,10 @@ function Chatview({ user, conversationData, curConversation, setCurConversation 
                         <ActionButton>
                             <i className="fas fa-plus"></i>
                         </ActionButton>
-                        <MessageInput placeholder="Say something..." />
+                        <MessageInput placeholder="Say something..." 
+                                      value={ newMessage }
+                                      onChange={ e => setNewMessage(e.target.value) }
+                        />
                         <ActionButton>
                             <i className="fas fa-arrow-circle-up"></i>
                         </ActionButton>

@@ -40,6 +40,7 @@ const SideIcon = styled.div`
         font-size: 28px;
         padding: 28px;
         cursor: pointer;
+        
 
         &:hover {
             color: #fd79a8;
@@ -51,10 +52,12 @@ const ProfileIcon = styled.div`
     object-fit: contain;
     height: 70px;
     cursor: pointer;
-
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 50%;
+    overflow: hidden;
+    
     img {
         height: 100%;
-        border-radius: 50%;
 
         &:hover {
             --webkit-box-shadow: 0 5px 24px -3px #fd79a8;
